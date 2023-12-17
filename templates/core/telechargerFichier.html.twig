@@ -1,0 +1,29 @@
+{% extends('base.html.twig') %}
+
+{% block titre %}{
+    {{ parent() }}
+    <div class="h3 text-center">
+        Téléchargement d'un fichier
+    </div>
+{% endblock %}
+{% block body %}
+    <hr>
+        <div class="container text-center">
+            {{ form_start(form) }}
+            <div class="row">
+                <div class="col">
+            {{ form_label(form.fichier) }}<br>
+            {{ form_widget(form.fichier) }}
+                </div>
+            </div>
+        <div class="row">
+            <div class="col">
+            {{ form_widget(form.valider) }}
+            </div>
+        </div>
+            {{ form_end(form) }}
+
+
+        </div>
+
+{% endblock %}

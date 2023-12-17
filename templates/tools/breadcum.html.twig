@@ -1,0 +1,15 @@
+<nav aria-label="Breadcrumb" class="breadcrumb">
+    <ul>
+
+        {%  if breadcum !=null %}
+            {% for i in 0..path_.rang %}
+                {% if i-1 < path_.rang %}
+                    <li><a href="{{ path('archives',{'idPath':breadcum[path_.rang-i].id}) }}">{{breadcum[path_.rang-i].name  }}</a></li>
+                {% elseif i-1 == path_.rang-1 %}
+                    <li><span aria-current="page">{{breadcum[path_.rang-i].name  }}</span></li>
+                {% endif %}
+            {% endfor %}
+
+        {%  endif %}
+    </ul>
+</nav>

@@ -1,0 +1,99 @@
+{% extends('base.html.twig') %}
+{% block titre %}
+    <div style="text-align: center"> {{ parent() }}<h2>Explorateur de fichiers</h2></div>
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div id="gridview">
+            <a type="button" href="{{ path('choix',{'choix':'liste'}) }}" class="fa fa-list fa-2x"></a>
+            <a type="button" href="{{ path('choix',{'choix':'icons'}) }}" class="fa fa-icon fa-2x"></a>
+            {% if path_.directory!=null %}
+                <a type="button" href="{{ path('archives',{'idPath': path_.directory.id}) }}" class="fa fa-caret-square-o-up fa-2x" title="Remonter dans le répertoire parent"> </a>
+            {% endif %}
+            <button type="button" id="newFolder" data-bs-toggle="modal" data-bs-target="#modalNewFolder" class="fa fa-plus fa-2x"  aria-hidden="true" title="Nouveau dossier"></button>
+            <a type="button" href="{{ path('telecharger',{'idPath': path_.id}) }}" class="fa fa-upload fa-2x" title="Télécharger un fichier depuis l'ordinateur"> </a>
+
+
+
+
+        </div>
+        <hr>
+        {% include('tools/breadcum.html.twig') %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Nom</th>
+                <th scope="col">Taille</th>
+                <th scope="col">Déposé le</th>
+                <th scope="col">Modifié le</th>
+                <th scope="col">Déposé par</th>
+                <th scope="col">Modifié par</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if directories != null %}
+                {% for directory in directories %}
+                    <tr>
+                        <td><button  class="fa fa-tasks fa-w" aria-hidden="true" onclick="expend"></button></td><!-- développer l'arborescence -->
+                        <td>
+
+                             <div id="{{ directory.id }}" class="image1" draggable="true" ><i class="fa fa-folder fa-w" aria-hidden="true"></i>
+                             <a href="{{ path('archives',{'idPath':directory.id}) }}" >{{ directory.name }}</a>
+                             </div>
+
+                            <div id="expend-{{ directory.id }}" style="collapse: hidden">
+                                {% if directory.subFolders!=null %}
+                                    {% for folder in directory.subFolders %}
+                                        <div id="{{ folder.id }}" class="subfolder" draggable="true" >
+                                            <i class="fa fa-folder fa-w" aria-hidden="true"></i>
+                                            <a href="{{ path('archives',{'idPath':folder.id}) }}" >{{ folder.name }}</a>
+                                        </div>
+                                    {%  endfor %}
+                                {% endif %}
+
+                            </div>
+
+                        </td>
+                        <td></td>
+                        <td>{{ directory.createdAt|date('Y-m-d') }}</td>
+                        <td>{{ directory.uploadedAt|date('Y-m-d') }}</td>
+                        <td>{{ directory.creator }}</td>
+                        <td>{{ directory.modificator }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            {%  if fichiers!= null %}
+                {% for fichier in fichiers %}
+                    <tr>
+                        <td></td>
+                    <td>
+                        <div id="{{ fichier.id }}" class="image1" draggable="true">
+                            <a href="{{ asset(pathStr~'/'~fichier.name) }}"> <img src="{{ asset(pathStr~'/'~fichier.name) }}"  alt=""/>{{ fichier.name }}</a>
+                        </div>
+                    </td>
+                    <td></td>
+                    <td>{{ fichier.createdAt|date('Y-m-d') }}</td>
+                    <td>{{ fichier.updatedAt|date('Y-m-d') }}</td>
+                    <td>{{ fichier.creator }}</td>
+                    <td>{{ fichier.modificator }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+
+            </tbody>
+        </table>
+    </div>
+
+
+
+{%  include('modales/modalNewFolder.html.twig') %}
+
+
+
+
+{%  endblock  %}
+{% block javascripts %}
+
+
+{% endblock %}

@@ -1,0 +1,31 @@
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+            <a class="navbar-brand" href="https://www.olymphys.fr/" target="_blank">
+                <img src=" https://www.olymphys.fr/public/odpf/odpf-images/site-logo-398x106.png" alt="">
+            </a>
+        {%  if app.user %}
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ app.user }}
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <form action="{{ path('app_logout') }}" method="post">
+                         <li>   <input type="submit" value="Déconnexion" class="btn btn-light"><!-- <a href  ne fonctionne pas car il faut une méthode post -->
+                        </form>
+
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        {% endif %}
+
+
+    </nav>
+</div>
